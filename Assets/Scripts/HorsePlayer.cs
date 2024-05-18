@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class HorsePlayer : MonoBehaviour
 {
     private float jumpForce = 5f; // Fuerza del salto
     private bool isJumping = false; // Variable para controlar si el caballo está saltando
     private float jumpDuration = 0.7f; // Duración total del salto (1 segundo hacia arriba, 1 segundo hacia abajo)
+    [SerializeField] TextMeshProUGUI Finish;
 
     // Start is called before the first frame update
     void Start()
@@ -41,5 +43,12 @@ public class HorsePlayer : MonoBehaviour
         }
 
         isJumping = false;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision){
+        if (collision.gameObject.tag == "Finish"){
+            // hacer que aparezca el mensaje de finish
+            Finish.text = "Finish!";
+        }
     }
 }
