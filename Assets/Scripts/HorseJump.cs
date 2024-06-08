@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HorseJump : MonoBehaviour
 {
-    private float jumpForce = 5f; // Fuerza del salto
+    private float jumpForce = 2f; // Fuerza del salto
     private bool isJumping = false; // Variable para controlar si el caballo está saltando
     private float jumpDuration = 0.7f; // Duración total del salto (1 segundo hacia arriba, 1 segundo hacia abajo)
 

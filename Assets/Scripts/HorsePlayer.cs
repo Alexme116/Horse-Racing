@@ -1,11 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class HorsePlayer : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI Finish;
     private HorseJump horseJump;// Referencia al script que controla el salto
 
     // Start is called before the first frame update
@@ -22,13 +20,6 @@ public class HorsePlayer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             horseJump.Saltar();
-        }
-    }
-
-    void OnCollisionEnter2D(Collision2D collision){
-        if (collision.gameObject.tag == "Finish"){
-            // hacer que aparezca el mensaje de finish
-            Finish.text = "Finish!";
         }
     }
 }

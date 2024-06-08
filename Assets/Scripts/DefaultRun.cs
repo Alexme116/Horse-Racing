@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 public class DefaultRun : MonoBehaviour
 {
@@ -11,7 +13,7 @@ public class DefaultRun : MonoBehaviour
     private bool start = false;
     private bool end = false;
     float initTime= 3;
-    [SerializeField] TextMeshProUGUI countDownText;
+    public static List<string> winners = new List<string>();
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +27,7 @@ public class DefaultRun : MonoBehaviour
         initTime -= Time.deltaTime;
         if (initTime <= 1 && !start){
             start = true;
-            speed = 6f;
+            speed = 8f;
         }
 
         transform.position += new Vector3(speed * Time.deltaTime, 0, 0);
@@ -45,10 +47,43 @@ public class DefaultRun : MonoBehaviour
         if (collision.gameObject.tag == "Finish"){
             speed = 0;
             end = true;
+            winners.Add(gameObject.name);
+            if (winners.Count == 3){
+                FinishGUIManager.Instance.SetTop1Name(winners[0]);
+                FinishGUIManager.Instance.SetTop2Name(winners[1]);
+                FinishGUIManager.Instance.SetTop3Name(winners[2]);
+                StartCoroutine(Finish());
+            }
         }
+        // 
         if (collision.gameObject.tag == "Valla"){
             speed = 6f;
-            Destroy(collision.gameObject);
+            VallaComportamiento.Instance.moverValla(collision.gameObject, gameObject);
         }
+    }
+
+    IEnumerator Finish(){
+        if (winners.Contains("Your Horse")){
+            FinishGUIManager.Instance.ShowLeaderBoard();
+            yield return new WaitForSeconds(3);
+            
+            int horseTop = winners.IndexOf("Your Horse");
+            if (horseTop == 0){
+                FinishGUIManager.Instance.AddCoins(50);
+            } else if (horseTop == 1){
+                FinishGUIManager.Instance.AddCoins(30);
+            } else if (horseTop == 2){
+                FinishGUIManager.Instance.AddCoins(15);
+            }
+
+            yield return new WaitForSeconds(3);
+            FinishGUIManager.Instance.HideLeaderBoard();
+        } else {
+            FinishGUIManager.Instance.ShowGameOver();
+            yield return new WaitForSeconds(3);
+            FinishGUIManager.Instance.HideGameOver();
+        }
+        winners.Clear();
+        SceneManager.LoadSceneAsync(0);
     }
 }
