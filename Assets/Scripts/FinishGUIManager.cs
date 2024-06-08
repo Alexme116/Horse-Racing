@@ -8,7 +8,6 @@ public class FinishGUIManager : MonoBehaviour
     [SerializeField]    private TMP_Text _top1Name; 
     [SerializeField]    private TMP_Text _top2Name;
     [SerializeField]    private TMP_Text _top3Name;
-    [SerializeField]    private TMP_Text _coins;
     public GameObject LeaderBoard;
     public GameObject GameOver;
 
@@ -42,10 +41,6 @@ public class FinishGUIManager : MonoBehaviour
         if (_top3Name.text == "") {
             _top3Name.text = text;
         }
-    }
-
-    public void AddCoins(int coins) {
-        _coins.text = (int.Parse(_coins.text) + coins).ToString();
     }
 
     public void ShowLeaderBoard() {

@@ -11,15 +11,9 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadSceneAsync(1);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void QuitGame()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Quit the game
+        Application.Quit();
     }
 }

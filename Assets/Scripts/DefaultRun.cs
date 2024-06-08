@@ -14,6 +14,7 @@ public class DefaultRun : MonoBehaviour
     private bool end = false;
     float initTime= 3;
     public static List<string> winners = new List<string>();
+    public GameObject controladorDatosJuego;
 
     // Start is called before the first frame update
     void Start()
@@ -69,11 +70,11 @@ public class DefaultRun : MonoBehaviour
             
             int horseTop = winners.IndexOf("Your Horse");
             if (horseTop == 0){
-                FinishGUIManager.Instance.AddCoins(50);
+                PlayerData.Instance.AddCoins(50);
             } else if (horseTop == 1){
-                FinishGUIManager.Instance.AddCoins(30);
+                PlayerData.Instance.AddCoins(30);
             } else if (horseTop == 2){
-                FinishGUIManager.Instance.AddCoins(15);
+                PlayerData.Instance.AddCoins(15);
             }
 
             yield return new WaitForSeconds(3);
@@ -84,6 +85,11 @@ public class DefaultRun : MonoBehaviour
             FinishGUIManager.Instance.HideGameOver();
         }
         winners.Clear();
+        controladorDatosJuego.GetComponent<ControladorDatosJuego>().GuardarDatos();
         SceneManager.LoadSceneAsync(0);
+    }
+
+    public float GetSpeed(){
+        return speed;
     }
 }
